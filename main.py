@@ -8,8 +8,13 @@ import os
 from random import shuffle
 from tqdm import tqdm
 
-TRAIN_DIR = 'C:/Users/aleks/PycharmProjects/pythonProject/siec_neuronowa_projekt/train'
-TEST_DIR = 'C:/Users/aleks/PycharmProjects/pythonProject/siec_neuronowa_projekt/test'
+# HomePC
+#TRAIN_DIR = 'C:/Users/aleks/PycharmProjects/pythonProject/siec_neuronowa_projekt/train'
+#TEST_DIR = 'C:/Users/aleks/PycharmProjects/pythonProject/siec_neuronowa_projekt/test'
+
+# Laptop
+TRAIN_DIR = 'C:/Users/aleks/PycharmProjects/siec_neuronowa_projekt/train'
+TEST_DIR = 'C:/Users/aleks/PycharmProjects/siec_neuronowa_projekt/test'
 IMG_SIZE = 50
 LR = 1e-3
 
