@@ -7,7 +7,6 @@ import tflearn
 from tflearn.layers.conv import conv_2d, max_pool_2d
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
-import tensorflow as tf
 import matplotlib.pyplot as plt
 
 # HomePC
@@ -20,7 +19,7 @@ TEST_DIR = 'C:/Users/aleks/PycharmProjects/pythonProject/siec_neuronowa_projekt/
 IMG_SIZE = 50
 LR = 1e-3
 
-MODEL_NAME = 'sc_projekt-{}-{}.model'.format(LR, '6conv-basic-video')
+MODEL_NAME = 'sc_projekt-{}-{}.model'.format(LR, '6conv-basic')
 
 
 def label_img(img):
@@ -39,7 +38,6 @@ def create_train_data():
         img = cv2.resize(cv2.imread(path, cv2.IMREAD_GRAYSCALE), (IMG_SIZE, IMG_SIZE))
         training_data.append([np.array(img), np.array(label)])
     shuffle(training_data)
-    # np.save('train_data.npy', training_data)
     return training_data
 
 
@@ -52,14 +50,10 @@ def process_test_data():
         testing_data.append([np.array(img), img_num])
 
     shuffle(testing_data)
-    # np.save('test_data.npy', testing_data)
     return testing_data
 
 
 train_data = create_train_data()
-# train_data = np.load('train_data.npy')
-
-# tf.reset_default_graph()
 
 convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
 
@@ -86,10 +80,6 @@ convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categori
 
 model = tflearn.DNN(convnet, tensorboard_dir='log')
 
-if os.path.exists('{}.meta'.format(MODEL_NAME)):
-    model.load(MODEL_NAME)
-    print('model loaded!')
-
 train = train_data[:-500]
 test = train_data[-500:]
 
@@ -103,7 +93,6 @@ model.fit({'input': X}, {'targets': Y}, n_epoch=5, validation_set=({'input': tes
           snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
 
 test_data = process_test_data()
-# test_data = np.load('train_data.npy')
 
 fig = plt.figure()
 
